@@ -7,5 +7,3 @@ jdk:
   - oraclejdk8
 notifications:
   slack: ardus:tbEdnY4aQ7M06DarWhFjTT9Q
-    on_success: always
-    on_failure: always
