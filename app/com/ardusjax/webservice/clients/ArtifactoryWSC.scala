@@ -20,36 +20,9 @@ class ArtifactoryWSC(ws: WSClient, baseUrl: String) {
 
   def repositories(): Future[Seq[Repository]] = {
     ws.url(baseUrl + "/repositories").get().map{ response =>
-      implicit val ownerReads: Reads[Owner] = (
-          (JsPath \ "login").read[String] and
-          (JsPath \ "id").read[Int] and
-          (JsPath \ "avatar_url").read[String] and
-          (JsPath \ "gravatar_id").read[String] and
-          (JsPath \ "url").read[String] and
-          (JsPath \ "html_url").read[String] and
-          (JsPath \ "followers_url").read[String] and
-          (JsPath \ "following_url").read[String] and
-          (JsPath \ "gists_url").read[String] and
-          (JsPath \ "starred_url").read[String] and
-          (JsPath \ "subscriptions_url").read[String] and
-          (JsPath \ "organizations_url").read[String] and
-          (JsPath \ "repos_url").read[String] and
-          (JsPath \ "events_url").read[String] and
-          (JsPath \ "received_events_url").read[String] and
-          (JsPath \ "type").read[String] and
-          (JsPath \ "site_admin").read[Boolean])(Owner.apply _)
+      implicit val ownerReads = Json.reads[Owner]
 
-      implicit val repositoryRead: Reads[Repository] = (
-        (JsPath \ "id").read[Int] and
-          (JsPath \ "owner").read[Owner] and
-          (JsPath \ "name").read[String] and
-          (JsPath \ "full_name").read[String] and
-          (JsPath \ "description").read[String] and
-          (JsPath \ "private").read[Boolean] and
-          (JsPath \ "fork").read[Boolean] and
-          (JsPath \ "url").read[String] and
-          (JsPath \ "html_url").read[String]
-        )(Repository.apply _)
+      implicit val repositoryRead = Json.reads[Repository]
       response.json.validate[Seq[Repository]] match {
         case s: JsSuccess[Seq[Repository]] => s.get
         case e: JsError => e.get
@@ -58,24 +31,7 @@ class ArtifactoryWSC(ws: WSClient, baseUrl: String) {
   }
   def owners(): Future[Seq[Owner]] = {
     ws.url(baseUrl + "/repositories").get().map{ response =>
-      implicit val res: Reads[Owner] = (
-        (JsPath \ "login").read[String] and
-          (JsPath \ "id").read[Int] and
-          (JsPath \ "avatar_url").read[String] and
-          (JsPath \ "gravatar_id").read[String] and
-          (JsPath \ "url").read[String] and
-          (JsPath \ "html_url").read[String] and
-          (JsPath \ "followers_url").read[String] and
-          (JsPath \ "following_url").read[String] and
-          (JsPath \ "gists_url").read[String] and
-          (JsPath \ "starred_url").read[String] and
-          (JsPath \ "subscriptions_url").read[String] and
-          (JsPath \ "organizations_url").read[String] and
-          (JsPath \ "repos_url").read[String] and
-          (JsPath \ "events_url").read[String] and
-          (JsPath \ "received_events_url").read[String] and
-          (JsPath \ "type").read[String] and
-          (JsPath \ "site_admin").read[Boolean])(Owner.apply _)
+      implicit val res = Json.reads[Owner]
       (response.json \\ "owner").map(_.as[Owner])
     }
   }
