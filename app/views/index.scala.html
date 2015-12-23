@@ -1,5 +1,5 @@
-@import com.ardusjax.webservice.clients.ArtifactoryWSC
-@(repositories: Seq[ArtifactoryWSC#Repository])
+@import com.ardusjax.webservice.clients.GitHubClient.models.Repository
+@(repositories: Seq[Repository])
 
 @main("Welcome to Play") {
     <nav class="navbar navbar-default">
