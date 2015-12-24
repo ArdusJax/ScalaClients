@@ -14,8 +14,8 @@ class GitHubWSC(ws: WSClient, baseUrl: String) {
   def repositories(): Future[Seq[Repository]] = {
     ws.url(baseUrl + "/repositories").get().map{ response =>
       implicit val ownerReads = Json.reads[Owner]
-
       implicit val repositoryRead = Json.reads[Repository]
+
       response.json.validate[Seq[Repository]] match {
         case s: JsSuccess[Seq[Repository]] => s.get
         case e: JsError => e.get
