@@ -4,6 +4,8 @@
 
 import com.ardusjax.webservice.clients.GitHubClient.GitHubWSC
 import com.ardusjax.webservice.clients.GitHubClient.models.Repository
+import org.junit.runner.RunWith
+import org.specs2.runner.JUnitRunner
 import play.core.server.Server
 import play.api.Play
 import play.api.routing.sird._
@@ -15,15 +17,15 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 
 import org.specs2.mutable.Specification
-import org.specs2.time.NoTimeConversions
 
-object GitHubClientSpec extends Specification with NoTimeConversions {
+@RunWith(classOf[JUnitRunner])
+class GitHubClientSpec extends Specification{
 
   "GitHubClient" should {
     "get all repositories and check the first repo's full name" in {
       withGitHubClient{ client =>
         val result = Await.result(client.repositories(), 10.seconds)
-        result.seq.map(repo => repo.full_name) must_== Seq("octocat/Hello-World")
+        result.seq.head.full_name must_== "octocat/Hello-World"
       }
     }
   }
@@ -32,7 +34,7 @@ object GitHubClientSpec extends Specification with NoTimeConversions {
     "get all repositories and check the first repo's name" in {
       withGitHubClient{ client =>
         val result = Await.result(client.repositories(), 10.seconds)
-        result.seq.map(repo => repo.name) must_== Seq("Hello-World")
+        result.seq.head.name must_== "Hello-World"
       }
     }
   }
