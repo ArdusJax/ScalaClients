@@ -11,3 +11,12 @@ I have based this project on the play framework.
 #### Clients
 * Artifactory - Restful Client for Artifactory 
 * Github - Restful Client for GitHub
+
+#### Requirements
+* Intellij IDE (Not really a requirement, but it rocks and makes things easier. :) )
+* Play Framework 2.4
+* Scala 2.11.7
+* Typesafe activator 1.3.7 (This is included when you download Play Framework)
+
+#### Setup
+After cloning the project please run activator clean, and then, if you're using Intellij IDE, import the project using the sbt option.
