@@ -6,4 +6,5 @@ script:
 jdk:
   - oraclejdk8
 notifications:
+  email: false
   slack: ardus:tbEdnY4aQ7M06DarWhFjTT9Q
