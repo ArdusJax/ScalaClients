@@ -7,6 +7,8 @@ import scala.collection.mutable
   */
 case class Agent(name: String, version: String)
 case class Artifact(name: String)
+case class BuildLinks(uri: String, laststarted: Option[String])
+case class Builds(uri: String, buildsNumbers: List[BuildNumber])
 case class Build(properties: mutable.HashMap[String, String],
                  version: String,
                  name: String,
@@ -26,6 +28,7 @@ case class Build(properties: mutable.HashMap[String, String],
                  modules: List[Module],
                  governance: Governance
                  )
+case class BuildNumber(uri: String, started: Option[String])
 case class BuildFile(`type`: String,
                      sha1: String,
                      md5: String)
